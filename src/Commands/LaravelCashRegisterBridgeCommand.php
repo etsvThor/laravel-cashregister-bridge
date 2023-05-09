@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace EtsvThor\LaravelCashRegisterBridge\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelCashRegisterBridgeCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-cashregister-bridge';
 
     public $description = 'My command';
 
