@@ -4,7 +4,6 @@ namespace EtsvThor\LaravelCashRegisterBridge;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use EtsvThor\LaravelCashRegisterBridge\Commands\LaravelCashRegisterBridgeCommand;
 
 class LaravelCashRegisterBridgeServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +16,6 @@ class LaravelCashRegisterBridgeServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-cashregister-bridge')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-cashregister-bridge_table')
-            ->hasCommand(LaravelCashRegisterBridgeCommand::class);
+            ->hasConfigFile();
     }
 }
