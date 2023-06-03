@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "EtsvThor\\LaravelCashRegisterBridge\\": "src/",
-            "EtsvThor\\LaravelCashRegisterBridge\\Database\\Factories\\": "database/factories/"
+            "EtsvThor\\CashRegisterBridge\\": "src/",
+            "EtsvThor\\CashRegisterBridge\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "EtsvThor\\LaravelCashRegisterBridge\\Tests\\": "tests/"
+            "EtsvThor\\CashRegisterBridge\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -61,10 +61,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "EtsvThor\\LaravelCashRegisterBridge\\LaravelCashRegisterBridgeServiceProvider"
+                "EtsvThor\\CashRegisterBridge\\CashRegisterBridgeServiceProvider"
             ],
             "aliases": {
-                "LaravelCashRegisterBridge": "EtsvThor\\LaravelCashRegisterBridge\\Facades\\LaravelCashRegisterBridge"
+                "CashRegisterBridge": "EtsvThor\\CashRegisterBridge\\Facades\\CashRegisterBridge"
             }
         }
     },
