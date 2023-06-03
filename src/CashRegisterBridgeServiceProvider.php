@@ -1,11 +1,11 @@
 <?php
 
-namespace EtsvThor\LaravelCashRegisterBridge;
+namespace EtsvThor\CashRegisterBridge;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LaravelCashRegisterBridgeServiceProvider extends PackageServiceProvider
+class CashRegisterBridgeServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -15,7 +15,7 @@ class LaravelCashRegisterBridgeServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('laravel-cashregister-bridge')
+            ->name('cashregister-bridge')
             ->hasConfigFile();
     }
 }

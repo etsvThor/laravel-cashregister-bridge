@@ -1,10 +1,10 @@
 <?php
 
-namespace EtsvThor\LaravelCashRegisterBridge\Tests;
+namespace EtsvThor\CashRegisterBridge\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use EtsvThor\LaravelCashRegisterBridge\LaravelCashRegisterBridgeServiceProvider;
+use EtsvThor\CashRegisterBridge\CashRegisterBridgeServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -20,7 +20,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelCashRegisterBridgeServiceProvider::class,
+            CashRegisterBridgeServiceProvider::class,
         ];
     }
 
