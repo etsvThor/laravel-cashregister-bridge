@@ -12,7 +12,7 @@ trait PushesExternalProductItem
 {
     public static function bootPushesExternalProductItem()
     {
-        static::created(function (HasExternalProductItem $externalProductItem) {
+        static::saved(function (HasExternalProductItem $externalProductItem) {
             PushExternalProductItem::dispatch($externalProductItem);
         });
     }

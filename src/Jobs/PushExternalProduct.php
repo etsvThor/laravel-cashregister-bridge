@@ -12,7 +12,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -32,8 +34,16 @@ class PushExternalProduct implements ShouldQueue
     public function handle()
     {
         $service_id = config('cashregister-bridge.service_id');
-        Http::withSignature(config('cashregister-bridge.secret'))->post(
-            Str::of(config('cashregister-bridge.base_url'))->finish('/')->append("api/services/{$service_id}/service-products")->toString(),
+        $url = Str::of(config('cashregister-bridge.base_url'))->finish('/')->append("api/services/{$service_id}/service-products")->toString();
+
+        // Make sure the connection (and thus the data) is secure, except for local testing
+        if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
+            Log::warning('Service#'.$service_id.' has an endpoint without https:// in front of the url.');
+            return;
+        }
+
+        $response = Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
+            $url,
             $this->externalProduct->toExternalProduct()->toArray(),
         )->throw();
     }

@@ -16,6 +16,7 @@ class CashRegisterBridgeServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('cashregister-bridge')
+            ->hasRoute('web')
             ->hasConfigFile();
     }
 }
