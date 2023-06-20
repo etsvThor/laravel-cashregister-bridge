@@ -2,6 +2,7 @@
 
 namespace EtsvThor\LaravelCashRegisterBridge;
 
+use EtsvThor\LaravelCashRegisterBridge\Commands\LaravelCashRegisterBridgeCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

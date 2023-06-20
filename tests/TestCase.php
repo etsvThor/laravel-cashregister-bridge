@@ -2,9 +2,9 @@
 
 namespace EtsvThor\LaravelCashRegisterBridge\Tests;
 
+use EtsvThor\LaravelCashRegisterBridge\LaravelCashRegisterBridgeServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use EtsvThor\LaravelCashRegisterBridge\LaravelCashRegisterBridgeServiceProvider;
 
 class TestCase extends Orchestra
 {
