@@ -35,7 +35,10 @@ class PushExternalProductItem implements ShouldQueue
     public function handle()
     {
         $service_id = config('cashregister-bridge.service_id');
-        $url = Str::of(config('cashregister-bridge.base_url'))->finish('/')->append("api/services/{$service_id}/service-items")->toString();
+        $url = Str::of(config('cashregister-bridge.base_url'))
+            ->finish('/')
+            ->append("api/services/{$service_id}/service-items")
+            ->toString();
 
         // Make sure the connection (and thus the data) is secure, except for local testing
         if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
