@@ -5,15 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/etsvthor/laravel-cashregister-bridge/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/etsvthor/laravel-cashregister-bridge/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/etsvthor/laravel-cashregister-bridge.svg?style=flat-square)](https://packagist.org/packages/etsvthor/laravel-cashregister-bridge)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-cashregister-bridge.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-cashregister-bridge)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+This package allows paying items from the website with the Thor cash register, for instance activity subscriptions from the Thorsite or TesLAN tickets. If an item is paid on the website, it's synced to the cash register. An item that is paid on the cash register gets synced to the external website as well.
 
 ## Installation
 
@@ -23,44 +15,42 @@ You can install the package via composer:
 composer require etsvthor/laravel-cashregister-bridge
 ```
 
-You can publish and run the migrations with:
+Optionally, you can publish the config file. This is not necessary normally, but you can do it with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-cashregister-bridge-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-cashregister-bridge-config"
+php artisan vendor:publish --tag="cashregister-bridge-config"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
+    'service_id' => env('CASHREGISTER_SERVICE_ID'),
+    'secret' => env('CASHREGISTER_SECRET'),
+    'base_url' => env('CASHREGISTER_BASE_URL', 'https://kassa.thor.edu`'),
 ];
 ```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-cashregister-bridge-views"
-```
+Create a service via `https://finances.thor.edu/admin/services` and put the service id + secret in the `.env`.
 
 ## Usage
+There are 2 types of models that needs to have an interface implemented. See the thorsite as example. 
 
-```php
-$laravelCashRegisterBridge = new EtsvThor\LaravelCashRegisterBridge();
-echo $laravelCashRegisterBridge->echoPhrase('Hello, EtsvThor!');
-```
+### External Product
+A product that you can sell. This can be an activity or a merch item to sell, etc.
+(For the thorsite: webform)
+- Implement the `EtsvThor\CashRegisterBridge\Contracts\HasExternalProduct` interface
+- Use the `EtsvThor\CashRegisterBridge\Traits\PushesExternalProduct` trait
 
-## Testing
+This will make you implement a conversion from the model to the linked DTO
 
-```bash
-composer test
-```
+### External Product Item
+The model that keeps track of what you sold. E.g. an activity subscription or someone who buys a merch item.
+(For the thorsite: webform submission)
+- Implement the `EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem` interface
+- Use the `EtsvThor\CashRegisterBridge\Traits\PushesExternalProduct` trait
+
+This will make you implement a conversion from the model to the linked DTO
 
 ## Changelog
 
