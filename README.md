@@ -52,6 +52,19 @@ The model that keeps track of what you sold. E.g. an activity subscription or so
 
 This will make you implement a conversion from the model to the linked DTO
 
+## Migration
+If you have existing models in your database with the `HasExternalProduct` and `HasExternalProductItem` interface, then you need to `touch` them, so they get put on the cash register E.g.
+```
+foreach(Webform::all() as $webform){
+    $webform->touch();
+}
+
+foreach(WebformSubmission::all() as $webform_submission){
+    $webform_submission->touch();
+}
+```
+You may need to throttle this, to not send too many http requests
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
