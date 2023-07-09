@@ -54,7 +54,7 @@ This will make you implement a conversion from the model to the linked DTO
 
 ## Migration
 If you have existing models in your database with the `HasExternalProduct` and `HasExternalProductItem` interface, then you need to `touch` them, so they get put on the cash register E.g.
-```
+```php
 foreach(Webform::all() as $webform){
     $webform->touch();
 }
