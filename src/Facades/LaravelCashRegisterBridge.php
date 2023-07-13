@@ -1,16 +1,16 @@
 <?php
 
-namespace EtsvThor\LaravelCashRegisterBridge\Facades;
+namespace EtsvThor\CashRegisterBridge\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \EtsvThor\LaravelCashRegisterBridge\LaravelCashRegisterBridge
+ * @see \EtsvThor\CashRegisterBridge\CashRegisterBridge
  */
 class LaravelCashRegisterBridge extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \EtsvThor\LaravelCashRegisterBridge\LaravelCashRegisterBridge::class;
+        return \EtsvThor\CashRegisterBridge\CashRegisterBridge::class;
     }
 }
