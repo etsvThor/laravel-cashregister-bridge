@@ -21,7 +21,7 @@ class CashRegisterController
             return $error;
         }
 
-        $productItem = $this->getExternalProductItem($request);
+        $productItem = $this->getExternalProductItem($request->validated('type'), $request->validated('id'));
 
         $success = $productItem->setAsExternallyPaid();
 
@@ -35,36 +35,36 @@ class CashRegisterController
 
     public function redirectToCashRegister(RedirectToCashRegisterRequest $request)
     {
-        $productItem = $this->getExternalProductItem($request);
+        $data = collect($request->validated('items'))
+            ->map(fn (array $item) => $this->getExternalProductItem($item['type'], $item['id']))
+            ->map(fn (HasExternalProductItem $productItem) => $productItem->toExternalProductItem()->only(
+                'product_type',
+                'product_id',
+                'type',
+                'id'
+            ))
+            ->toArray();
 
-        $data = $productItem->toExternalProductItem()->only(
-            'product_type',
-            'product_id',
-            'type',
-            'id'
-        );
 
-        $query = http_build_query($data);
+        $query = http_build_query(['items' => $data]);
 
         $hash = hash_hmac('sha256', $query, config('cashregister-bridge.secret'));
 
         $service_id = config('cashregister-bridge.service_id');
         $url = Str::of(config('cashregister-bridge.base_url'))
             ->finish('/')
-            ->append("api/services/{$service_id}/service-items/add-to-cart?")
+            ->append("services/{$service_id}/service-items/add-to-cart?")
             ->append($query)
+            ->append("&signature=$hash")
             ->toString();
 
-        return redirect($url)
-            ->withHeaders(['X-Signature' => $hash]);
+        return redirect($url);
     }
 
-    protected function getExternalProductItem(Request $request): HasExternalProductItem
+    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem
     {
-        $type = $request->validated('type');
-
         /** @var HasExternalProductItem $productItem */
-        $productItem = $type::findOrFail($request->validated('id'));
+        $productItem = $type::findOrFail($id);
 
         throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
 

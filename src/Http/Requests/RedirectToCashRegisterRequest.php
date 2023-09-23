@@ -19,8 +19,9 @@ class RedirectToCashRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required',
-            'id' => 'required|numeric|min:1',
+            'items' => 'required|array',
+            'items.*.type' => 'required',
+            'items.*.id' => 'required|numeric|min:1',
         ];
     }
 }
