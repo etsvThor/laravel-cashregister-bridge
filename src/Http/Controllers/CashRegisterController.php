@@ -5,9 +5,11 @@ namespace EtsvThor\CashRegisterBridge\Http\Controllers;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
 use EtsvThor\CashRegisterBridge\Exceptions\HasNoExternalProductItem;
 use EtsvThor\CashRegisterBridge\Exceptions\SetAsPaidFailed;
+use EtsvThor\CashRegisterBridge\Exceptions\SetAsRefundedFailed;
 use EtsvThor\CashRegisterBridge\Http\Controllers\Traits\VerifiesSignature;
 use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
+use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,24 @@ class CashRegisterController
         return [
             'success' => true,
             'message' => 'The item has been set as paid',
+        ];
+    }
+
+    public function setAsRefunded(SetAsRefundedRequest $request)
+    {
+        if (!is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
+            return $error;
+        }
+
+        $productItem = $this->getExternalProductItem($request->validated('type'), $request->validated('id'));
+
+        $success = $productItem->setAsExternallyRefunded();
+
+        throw_unless($success, SetAsRefundedFailed::class);
+
+        return [
+            'success' => true,
+            'message' => 'The item has been set as refunded',
         ];
     }
 

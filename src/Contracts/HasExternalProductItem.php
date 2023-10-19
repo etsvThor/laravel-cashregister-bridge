@@ -10,5 +10,6 @@ interface HasExternalProductItem
     public function externalProductItemRelationship(): string;
 
     public function setAsExternallyPaid(): bool;
+    public function setAsExternallyRefunded(): bool;
     public function isPaid(): bool;
 }
