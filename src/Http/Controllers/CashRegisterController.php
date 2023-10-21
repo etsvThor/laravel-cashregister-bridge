@@ -19,7 +19,7 @@ class CashRegisterController
 
     public function setAsPaid(SetAsPaidRequest $request)
     {
-        if (!is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
+        if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
             return $error;
         }
 
@@ -37,7 +37,7 @@ class CashRegisterController
 
     public function setAsRefunded(SetAsRefundedRequest $request)
     {
-        if (!is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
+        if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
             return $error;
         }
 
