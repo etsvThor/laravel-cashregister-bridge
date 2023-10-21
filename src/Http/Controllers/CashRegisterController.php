@@ -10,6 +10,7 @@ use EtsvThor\CashRegisterBridge\Http\Controllers\Traits\VerifiesSignature;
 use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -27,7 +28,7 @@ class CashRegisterController
 
         $success = $productItem->setAsExternallyPaid();
 
-        throw_unless($success, SetAsPaidFailed::class);
+        throw_unless($success, SetAsPaidFailed::class, $productItem);
 
         return [
             'success' => true,
@@ -45,7 +46,7 @@ class CashRegisterController
 
         $success = $productItem->setAsExternallyRefunded();
 
-        throw_unless($success, SetAsRefundedFailed::class);
+        throw_unless($success, SetAsRefundedFailed::class, $productItem);
 
         return [
             'success' => true,
@@ -81,9 +82,9 @@ class CashRegisterController
         return redirect($url);
     }
 
-    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem
+    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem&Model
     {
-        /** @var HasExternalProductItem $productItem */
+        /** @var HasExternalProductItem&Model $productItem */
         $productItem = $type::findOrFail($id);
 
         throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
