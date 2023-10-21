@@ -5,9 +5,12 @@ namespace EtsvThor\CashRegisterBridge\Http\Controllers;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
 use EtsvThor\CashRegisterBridge\Exceptions\HasNoExternalProductItem;
 use EtsvThor\CashRegisterBridge\Exceptions\SetAsPaidFailed;
+use EtsvThor\CashRegisterBridge\Exceptions\SetAsRefundedFailed;
 use EtsvThor\CashRegisterBridge\Http\Controllers\Traits\VerifiesSignature;
 use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
+use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -17,7 +20,7 @@ class CashRegisterController
 
     public function setAsPaid(SetAsPaidRequest $request)
     {
-        if (!is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
+        if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
             return $error;
         }
 
@@ -25,11 +28,29 @@ class CashRegisterController
 
         $success = $productItem->setAsExternallyPaid();
 
-        throw_unless($success, SetAsPaidFailed::class);
+        throw_unless($success, SetAsPaidFailed::class, $productItem);
 
         return [
             'success' => true,
             'message' => 'The item has been set as paid',
+        ];
+    }
+
+    public function setAsRefunded(SetAsRefundedRequest $request)
+    {
+        if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
+            return $error;
+        }
+
+        $productItem = $this->getExternalProductItem($request->validated('type'), $request->validated('id'));
+
+        $success = $productItem->setAsExternallyRefunded();
+
+        throw_unless($success, SetAsRefundedFailed::class, $productItem);
+
+        return [
+            'success' => true,
+            'message' => 'The item has been set as refunded',
         ];
     }
 
@@ -61,9 +82,9 @@ class CashRegisterController
         return redirect($url);
     }
 
-    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem
+    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem&Model
     {
-        /** @var HasExternalProductItem $productItem */
+        /** @var HasExternalProductItem&Model $productItem */
         $productItem = $type::findOrFail($id);
 
         throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
