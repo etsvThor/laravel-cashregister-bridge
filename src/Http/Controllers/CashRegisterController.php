@@ -11,7 +11,6 @@ use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CashRegisterController
