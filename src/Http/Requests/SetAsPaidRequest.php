@@ -6,11 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SetAsPaidRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,6 +16,7 @@ class SetAsPaidRequest extends FormRequest
         return [
             'type' => 'required',
             'id' => 'required|numeric|min:1',
+            'completed' => 'nullable|accepted',
         ];
     }
 }

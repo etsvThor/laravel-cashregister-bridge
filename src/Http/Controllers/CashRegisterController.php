@@ -11,7 +11,6 @@ use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CashRegisterController
@@ -27,6 +26,9 @@ class CashRegisterController
         $productItem = $this->getExternalProductItem($request->validated('type'), $request->validated('id'));
 
         $success = $productItem->setAsExternallyPaid();
+        if ($success && ! is_null($request->validated('completed'))) {
+            $productItem->setAsCompleted();
+        }
 
         throw_unless($success, SetAsPaidFailed::class, $productItem);
 

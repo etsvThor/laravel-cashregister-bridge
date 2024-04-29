@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 trait PushesExternalProductItem
 {
-    public static function bootPushesExternalProductItem()
+    public static function bootPushesExternalProductItem(): void
     {
         static::saved(function (HasExternalProductItem $externalProductItem) {
             PushExternalProductItem::dispatch($externalProductItem);
