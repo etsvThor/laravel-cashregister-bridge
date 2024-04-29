@@ -21,6 +21,7 @@ class SetAsPaidRequest extends FormRequest
         return [
             'type' => 'required',
             'id' => 'required|numeric|min:1',
+            'completed' => 'nullable|accepted',
         ];
     }
 }
