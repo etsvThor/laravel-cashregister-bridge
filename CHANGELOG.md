@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 3.0.1 - 2024-04-30
+
+### What's Changed
+
+* Improve completed bool by @niekbr in https://github.com/etsvThor/laravel-cashregister-bridge/pull/14
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/3.0.0...3.0.1
+
 ## V3.0.0 - 2024-04-29
 
 ### What's Changed
