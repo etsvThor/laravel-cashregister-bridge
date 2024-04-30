@@ -26,7 +26,7 @@ class CashRegisterController
         $productItem = $this->getExternalProductItem($request->validated('type'), $request->validated('id'));
 
         $success = $productItem->setAsExternallyPaid();
-        if ($success && ! is_null($request->validated('completed'))) {
+        if ($success && $request->validated('completed')) {
             $productItem->setAsCompleted();
         }
 
