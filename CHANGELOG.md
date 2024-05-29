@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## V3.0.2 - 2024-05-29
+
+### What's Changed
+
+* Add support for Laravel 11 by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/15
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/3.0.1...3.0.2
+
 ## 3.0.1 - 2024-04-30
 
 ### What's Changed
