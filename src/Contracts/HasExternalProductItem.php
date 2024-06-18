@@ -6,7 +6,7 @@ use EtsvThor\CashRegisterBridge\DTO\ExternalProductItem;
 
 interface HasExternalProductItem
 {
-    public function toExternalProductItem(): ExternalProductItem;
+    public function toExternalProductItem(): ?ExternalProductItem;
     public function externalProductItemRelationship(): string;
     public function setAsCompleted(): bool;
     public function setAsExternallyPaid(): bool;
