@@ -19,5 +19,7 @@ class ExternalProductItem extends Data
 
         public float $price_incl_vat,
         public bool $is_paid,
+
+        public ?string $redirect_url = null,
     ) {}
 }

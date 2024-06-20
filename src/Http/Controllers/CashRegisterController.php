@@ -64,8 +64,10 @@ class CashRegisterController
                 'product_type',
                 'product_id',
                 'type',
-                'id'
+                'id',
+                'redirect_url',
             ))
+            ->filter()
             ->toArray();
 
 
