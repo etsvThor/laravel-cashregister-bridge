@@ -17,6 +17,7 @@ class RedirectToCashRegisterRequest extends FormRequest
             'items' => 'required|array',
             'items.*.type' => 'required',
             'items.*.id' => 'required|numeric|min:1',
+            'redirect_url' => 'nullable|string|url',
         ];
     }
 }
