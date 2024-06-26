@@ -46,9 +46,15 @@ class PushExternalProductItem implements ShouldQueue
             return;
         }
 
+        $externalProductItem = $this->externalProductItem->toExternalProductItem();
+
+        if( is_null($externalProductItem)) {
+            return;
+        }
+
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
             $url,
-            $this->externalProductItem->toExternalProductItem()->toArray(),
+            $externalProductItem->toArray(),
         )->throw();
     }
 }

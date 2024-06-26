@@ -64,12 +64,13 @@ class CashRegisterController
                 'product_type',
                 'product_id',
                 'type',
-                'id'
+                'id',
             ))
             ->toArray();
 
 
-        $query = http_build_query(['items' => $data]);
+        $queryData = array_filter(['items' => $data, 'redirect_url' => $request->validated('redirect_url')]);
+        $query = http_build_query($queryData);
 
         $hash = hash_hmac('sha256', $query, config('cashregister-bridge.secret'));
 
