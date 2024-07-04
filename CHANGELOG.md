@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.1 - 2024-07-04
+
+### What's Changed
+
+* Ignore push if DTO is null by @niekbr in https://github.com/etsvThor/laravel-cashregister-bridge/pull/20
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.0...4.1.1
+
 ## 4.1.0 - 2024-07-04
 
 ### What's Changed
