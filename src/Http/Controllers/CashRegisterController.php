@@ -87,8 +87,12 @@ class CashRegisterController
 
     protected function getExternalProductItem(string $type, int $id): HasExternalProductItem&Model
     {
+        $columns = method_exists($type, 'getExternalProductItemColumns')
+            ? $type::getExternalProductItemColumns()
+            : ['*'];
+
         /** @var HasExternalProductItem&Model $productItem */
-        $productItem = $type::findOrFail($id);
+        $productItem = $type::findOrFail($id, $columns);
 
         throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
 
