@@ -2,13 +2,7 @@
 
 namespace EtsvThor\CashRegisterBridge\Jobs;
 
-use App\Mail\PublicRelationsMail;
-use App\Models\ContentTypes\Company;
-use App\Models\Role;
-use Carbon\Carbon;
-use EtsvThor\CashRegisterBridge\Contracts\HasExternalProduct;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
-use EtsvThor\CashRegisterBridge\DTO\ExternalProductItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -17,7 +11,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PushExternalProductItem implements ShouldQueue
@@ -25,7 +18,7 @@ class PushExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public ?ExternalProductItem $externalProductItem
+        public HasExternalProductItem $externalProductItem
     ) {}
 
     /**
@@ -47,13 +40,13 @@ class PushExternalProductItem implements ShouldQueue
             return;
         }
 
-        if (is_null($this->externalProductItem)) {
+        if (is_null($dto = $this->externalProductItem->toExternalProductItem())) {
             return;
         }
 
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
             $url,
-            $this->externalProductItem->toArray(),
+           $dto->toArray(),
         )->throw();
     }
 }

@@ -12,7 +12,7 @@ trait PushesExternalProduct
     public static function bootPushesExternalProduct(): void
     {
         static::saved(function (HasExternalProduct $externalProduct) {
-            PushExternalProduct::dispatch($externalProduct->toExternalProduct());
+            PushExternalProduct::dispatch($externalProduct);
         });
 
         static::deleted(function (HasExternalProduct $externalProductItem) {
