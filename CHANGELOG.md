@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.0 - 2024-07-04
+
+### What's Changed
+
+* Fuck db permissions by @niekbr in https://github.com/etsvThor/laravel-cashregister-bridge/pull/19
+* Pass DTO to job instead of model by @niekbr in https://github.com/etsvThor/laravel-cashregister-bridge/pull/18
+
+!! If you dispatch the cash register sync jobs in your application, please pass the DTO instead of the model as job parameter.
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.0.0...4.1.0
+
 ## 4.0.0 - 2024-06-26
 
 ### What's Changed
