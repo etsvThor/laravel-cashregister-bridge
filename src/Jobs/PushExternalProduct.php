@@ -24,7 +24,7 @@ class PushExternalProduct implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public ExternalProduct $externalProduct
+        public HasExternalProduct $externalProduct
     ) {}
 
     /**
@@ -45,7 +45,7 @@ class PushExternalProduct implements ShouldQueue
 
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
             $url,
-            $this->externalProduct->toArray(),
+            $this->externalProduct->toExternalProduct()->toArray(),
         )->throw();
     }
 }
