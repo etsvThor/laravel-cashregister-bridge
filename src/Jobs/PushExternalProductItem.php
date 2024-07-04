@@ -25,7 +25,7 @@ class PushExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public ExternalProductItem $externalProductItem
+        public ?ExternalProductItem $externalProductItem
     ) {}
 
     /**
@@ -44,6 +44,10 @@ class PushExternalProductItem implements ShouldQueue
         // Make sure the connection (and thus the data) is secure, except for local testing
         if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
             Log::warning('Service#'.$service_id.' has an endpoint without https:// in front of the url.');
+            return;
+        }
+
+        if (is_null($this->externalProductItem)) {
             return;
         }
 
