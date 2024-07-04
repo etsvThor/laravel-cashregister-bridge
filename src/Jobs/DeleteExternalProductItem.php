@@ -8,6 +8,7 @@ use App\Models\Role;
 use Carbon\Carbon;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProduct;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
+use EtsvThor\CashRegisterBridge\DTO\ExternalProductItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,7 +26,7 @@ class DeleteExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public HasExternalProductItem $externalProductItem
+        public ExternalProductItem $externalProductItem
     ) {}
 
     /**
@@ -49,7 +50,7 @@ class DeleteExternalProductItem implements ShouldQueue
 
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->delete(
             $url,
-            $this->externalProductItem->toExternalProductItem()->only(
+            $this->externalProductItem->only(
                 'product_type',
                 'product_id',
                 'type',
