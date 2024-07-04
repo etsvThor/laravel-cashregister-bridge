@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.2 - 2024-07-04
+
+### What's Changed
+
+* Revert last changes partly by @niekbr in https://github.com/etsvThor/laravel-cashregister-bridge/pull/21
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.1...4.1.2
+
 ## 4.1.1 - 2024-07-04
 
 ### What's Changed
