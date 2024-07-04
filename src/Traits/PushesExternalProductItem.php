@@ -14,11 +14,11 @@ trait PushesExternalProductItem
     public static function bootPushesExternalProductItem(): void
     {
         static::saved(function (HasExternalProductItem $externalProductItem) {
-            PushExternalProductItem::dispatch($externalProductItem);
+            PushExternalProductItem::dispatch($externalProductItem->toExternalProductItem());
         });
 
         static::deleted(function (HasExternalProductItem $externalProductItem) {
-            DeleteExternalProductItem::dispatch($externalProductItem);
+            DeleteExternalProductItem::dispatch($externalProductItem->toExternalProductItem());
         });
     }
 }

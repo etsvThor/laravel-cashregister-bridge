@@ -8,6 +8,7 @@ use App\Models\Role;
 use Carbon\Carbon;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProduct;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
+use EtsvThor\CashRegisterBridge\DTO\ExternalProductItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,7 +25,7 @@ class PushExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public HasExternalProductItem $externalProductItem
+        public ExternalProductItem $externalProductItem
     ) {}
 
     /**
@@ -46,15 +47,9 @@ class PushExternalProductItem implements ShouldQueue
             return;
         }
 
-        $externalProductItem = $this->externalProductItem->toExternalProductItem();
-
-        if( is_null($externalProductItem)) {
-            return;
-        }
-
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
             $url,
-            $externalProductItem->toArray(),
+            $this->externalProductItem->toArray(),
         )->throw();
     }
 }
