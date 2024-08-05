@@ -14,7 +14,11 @@ trait PushesExternalProductItem
     public static function bootPushesExternalProductItem(): void
     {
         static::saved(function (HasExternalProductItem $externalProductItem) {
-            PushExternalProductItem::dispatch($externalProductItem);
+            if (config('cashregister-bridge.product_item_saved_sync')) {
+                PushExternalProductItem::dispatch($externalProductItem)->onConnection('sync');;
+            } else {
+                PushExternalProductItem::dispatch($externalProductItem);
+            }
         });
 
         static::deleted(function (HasExternalProductItem $externalProductItem) {
