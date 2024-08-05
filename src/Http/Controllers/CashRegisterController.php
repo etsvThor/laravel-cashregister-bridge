@@ -92,7 +92,7 @@ class CashRegisterController
             : ['*'];
 
         /** @var HasExternalProductItem&Model $productItem */
-        $productItem = $type::withThrashed()->findOrFail($id, $columns);
+        $productItem = $type::withTrashed()->findOrFail($id, $columns);
 
         throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
 
