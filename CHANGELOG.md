@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.3 - 2024-08-08
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/etsvThor/laravel-cashregister-bridge/pull/22
+* Allow get for cashregister.redirect route by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/23
+* Add config option to push recently created product items on sync by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/23
+* Make it possible to receive payments from trashed product items by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/23
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.2...4.1.3
+
 ## 4.1.2 - 2024-07-04
 
 ### What's Changed
