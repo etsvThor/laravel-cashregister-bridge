@@ -26,7 +26,7 @@ class DeleteExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public ?ExternalProductItem $externalProductItem
+        public ?ExternalProductItem $externalProductItem,
     ) {}
 
     /**
