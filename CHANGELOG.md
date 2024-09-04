@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.4 - 2024-09-04
+
+### What's Changed
+
+* Fix by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/24
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.3...4.1.4
+
 ## 4.1.3 - 2024-08-08
 
 ### What's Changed
