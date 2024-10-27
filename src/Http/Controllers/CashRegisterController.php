@@ -92,7 +92,7 @@ class CashRegisterController
             : ['*'];
 
         /** @var HasExternalProductItem&Model $productItem */
-        if (method_exists($type, 'withThrashed')) {
+        if (method_exists($type, 'bootSoftDeletes')) {
             $productItem = $type::withTrashed()->findOrFail($id, $columns);
         } else {
             $productItem = $type::findOrFail($id, $columns);
