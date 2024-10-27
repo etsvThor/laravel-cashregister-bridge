@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 4.1.5 - 2024-10-27
+
+### What's Changed
+
+* Fix getExternalProductItem for softdeletes models by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/25
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.4...4.1.5
+
 ## 4.1.4 - 2024-09-04
 
 ### What's Changed
