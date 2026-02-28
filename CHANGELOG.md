@@ -2,6 +2,20 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 5.0.0 - 2026-02-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot[bot] in https://github.com/etsvThor/laravel-cashregister-bridge/pull/26
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/etsvThor/laravel-cashregister-bridge/pull/27
+* Bump actions/checkout from 4 to 6 by @dependabot[bot] in https://github.com/etsvThor/laravel-cashregister-bridge/pull/31
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/etsvThor/laravel-cashregister-bridge/pull/32
+* Bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/etsvThor/laravel-cashregister-bridge/pull/30
+* Bump Laravel requirements to 11
+* Allow Laravel 12
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/4.1.5...5.0.0
+
 ## 4.1.5 - 2024-10-27
 
 ### What's Changed
