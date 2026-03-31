@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-cashregister-bridge` will be documented in this file.
 
+## 5.0.1 - 2026-03-31
+
+### What's Changed
+
+* Allow php8.5 by @ThijsLacquet in https://github.com/etsvThor/laravel-cashregister-bridge/pull/34
+
+**Full Changelog**: https://github.com/etsvThor/laravel-cashregister-bridge/compare/5.0.0...5.0.1
+
 ## 5.0.0 - 2026-02-28
 
 ### What's Changed
