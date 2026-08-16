@@ -79,7 +79,6 @@ class CashRegisterController
             ->filter()
             ->toArray();
 
-
         $queryData = array_filter(['items' => $data, 'redirect_url' => $request->validated('redirect_url')]);
         $query = http_build_query($queryData);
 

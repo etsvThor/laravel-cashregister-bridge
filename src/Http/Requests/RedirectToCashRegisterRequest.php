@@ -24,6 +24,7 @@ class RedirectToCashRegisterRequest extends FormRequest
                 function (string $attribute, mixed $value, Closure $fail) {
                     if (! is_string($value) || ! class_exists($value)) {
                         $fail("The {$attribute} must be a valid class name.");
+
                         return;
                     }
 
