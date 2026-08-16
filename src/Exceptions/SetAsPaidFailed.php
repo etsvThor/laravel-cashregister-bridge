@@ -5,6 +5,7 @@ namespace EtsvThor\CashRegisterBridge\Exceptions;
 use EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class SetAsPaidFailed extends Exception
 {
