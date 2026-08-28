@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 trait VerifiesSignature
 {
-    protected function verifySignature(Request $request, string $signature): JsonResponse|null
+    protected function verifySignature(Request $request, string $signature): JsonResponse | null
     {
         if (! $request->verifySignature($signature)) {
             return response()->json([

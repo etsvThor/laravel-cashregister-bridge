@@ -24,7 +24,7 @@ class DeleteExternalProduct implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public ExternalProduct $externalProduct
+        public ExternalProduct $externalProduct,
     ) {}
 
     /**
@@ -40,6 +40,7 @@ class DeleteExternalProduct implements ShouldQueue
         // Make sure the connection (and thus the data) is secure, except for local testing
         if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
             Log::warning('Service#'.$service_id.' has an endpoint without https:// in front of the url.');
+
             return;
         }
 

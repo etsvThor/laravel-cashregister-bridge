@@ -14,7 +14,7 @@ trait PushesExternalProductItem
 {
     public static function bootPushesExternalProductItem(): void
     {
-        static::saved(function (HasExternalProductItem&Model $externalProductItem) {
+        static::saved(function (HasExternalProductItem & Model $externalProductItem) {
             if (config('cashregister-bridge.push_product_items_on_sync') && $externalProductItem->wasRecentlyCreated) {
                 PushExternalProductItem::dispatch($externalProductItem)->onConnection('sync');
             } else {

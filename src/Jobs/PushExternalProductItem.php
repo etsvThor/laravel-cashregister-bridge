@@ -18,7 +18,7 @@ class PushExternalProductItem implements ShouldQueue
     use Queueable, SerializesModels, InteractsWithQueue, Dispatchable;
 
     public function __construct(
-        public HasExternalProductItem $externalProductItem
+        public HasExternalProductItem $externalProductItem,
     ) {}
 
     /**
@@ -37,6 +37,7 @@ class PushExternalProductItem implements ShouldQueue
         // Make sure the connection (and thus the data) is secure, except for local testing
         if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
             Log::warning('Service#'.$service_id.' has an endpoint without https:// in front of the url.');
+
             return;
         }
 
@@ -46,7 +47,7 @@ class PushExternalProductItem implements ShouldQueue
 
         Http::acceptJson()->withSignature(config('cashregister-bridge.secret'))->post(
             $url,
-           $dto->toArray(),
+            $dto->toArray(),
         )->throw();
     }
 }

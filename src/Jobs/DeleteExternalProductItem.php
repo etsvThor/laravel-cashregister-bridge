@@ -14,12 +14,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 class DeleteExternalProductItem implements ShouldQueue
 {
@@ -45,6 +45,7 @@ class DeleteExternalProductItem implements ShouldQueue
         // Make sure the connection (and thus the data) is secure, except for local testing
         if (! App::environment('local') && ! Str::startsWith($url, 'https://')) {
             Log::warning('Service#'.$service_id.' has an endpoint without https:// in front of the url.');
+
             return;
         }
 
@@ -58,7 +59,7 @@ class DeleteExternalProductItem implements ShouldQueue
                 'product_type',
                 'product_id',
                 'type',
-                'id'
+                'id',
             )->toArray(),
         )->throw();
     }

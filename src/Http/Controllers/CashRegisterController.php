@@ -11,13 +11,15 @@ use EtsvThor\CashRegisterBridge\Http\Requests\RedirectToCashRegisterRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsPaidRequest;
 use EtsvThor\CashRegisterBridge\Http\Requests\SetAsRefundedRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
 class CashRegisterController
 {
     use VerifiesSignature;
 
-    public function setAsPaid(SetAsPaidRequest $request)
+    public function setAsPaid(SetAsPaidRequest $request): JsonResponse
     {
         if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
             return $error;
@@ -32,13 +34,13 @@ class CashRegisterController
 
         throw_unless($success, SetAsPaidFailed::class, $productItem);
 
-        return [
+        return response()->json([
             'success' => true,
             'message' => 'The item has been set as paid',
-        ];
+        ]);
     }
 
-    public function setAsRefunded(SetAsRefundedRequest $request)
+    public function setAsRefunded(SetAsRefundedRequest $request): JsonResponse
     {
         if (! is_null($error = $this->verifySignature($request, config('cashregister-bridge.secret')))) {
             return $error;
@@ -50,24 +52,32 @@ class CashRegisterController
 
         throw_unless($success, SetAsRefundedFailed::class, $productItem);
 
-        return [
+        return response()->json([
             'success' => true,
             'message' => 'The item has been set as refunded',
-        ];
+        ]);
     }
 
-    public function redirectToCashRegister(RedirectToCashRegisterRequest $request)
+    public function redirectToCashRegister(RedirectToCashRegisterRequest $request): RedirectResponse
     {
-        $data = collect($request->validated('items'))
+        /**
+         * @var array{
+         *     'type': class-string<\EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem & \Illuminate\Database\Eloquent\Model>,
+         *     'id': int,
+         * }[] $items
+         */
+        $items = $request->validated('items');
+
+        $data = collect($items)
             ->map(fn (array $item) => $this->getExternalProductItem($item['type'], $item['id']))
-            ->map(fn (HasExternalProductItem $productItem) => $productItem->toExternalProductItem()->only(
+            ->map(fn (HasExternalProductItem $productItem) => $productItem->toExternalProductItem()?->only(
                 'product_type',
                 'product_id',
                 'type',
                 'id',
             ))
+            ->filter()
             ->toArray();
-
 
         $queryData = array_filter(['items' => $data, 'redirect_url' => $request->validated('redirect_url')]);
         $query = http_build_query($queryData);
@@ -85,20 +95,22 @@ class CashRegisterController
         return redirect($url);
     }
 
-    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem&Model
+    /**
+     * @param class-string<\EtsvThor\CashRegisterBridge\Contracts\HasExternalProductItem & \Illuminate\Database\Eloquent\Model> $type
+     */
+    protected function getExternalProductItem(string $type, int $id): HasExternalProductItem & Model
     {
         $columns = method_exists($type, 'getExternalProductItemColumns')
             ? $type::getExternalProductItemColumns()
             : ['*'];
 
-        /** @var HasExternalProductItem&Model $productItem */
         if (method_exists($type, 'bootSoftDeletes')) {
-            $productItem = $type::withTrashed()->findOrFail($id, $columns);
+            $productItem = $type::query()->withTrashed()->findOrFail($id, $columns); // @phpstan-ignore method.notFound
         } else {
-            $productItem = $type::findOrFail($id, $columns);
+            $productItem = $type::query()->findOrFail($id, $columns);
         }
 
-        throw_unless($productItem instanceof HasExternalProductItem, HasNoExternalProductItem::class);
+        throw_unless($productItem instanceof HasExternalProductItem && $productItem instanceof Model, HasNoExternalProductItem::class);
 
         return $productItem;
     }

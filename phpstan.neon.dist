@@ -1,14 +1,16 @@
 includes:
-    - phpstan-baseline.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
-    level: 4
+    level: 8
+    ignoreErrors:
+            - identifier: trait.unused
+            -
+                identifier: larastan.noEnvCallsOutsideOfConfig
+                path: config/*
+            - '#^Call to an undefined method Illuminate\\Http\\Client\\PendingRequest::withSignature\(\)\.$#'
+            - '#^Call to an undefined method Illuminate\\Http\\Request::verifySignature\(\)\.$#'
     paths:
         - src
         - config
-        - database
-    tmpDir: build/phpstan
-    checkOctaneCompatibility: true
-    checkModelProperties: true
-    checkMissingIterableValueType: false
 
